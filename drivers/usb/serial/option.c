@@ -277,9 +277,13 @@ static void option_instat_callback(struct urb *urb);
 #define TELIT_PRODUCT_LE922_USBCFG5		0x1045
 #define TELIT_PRODUCT_ME910			0x1100
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define TELIT_PRODUCT_ME910_DUAL_MODEM		0x1101
 =======
 >>>>>>> ee725ebbf25a (usb: Update most of the USB stack to 3.18.71)
+=======
+#define TELIT_PRODUCT_ME910_DUAL_MODEM		0x1101
+>>>>>>> 5be1a75b84e0 (usb: Update most of the USB stack to 3.18.120)
 #define TELIT_PRODUCT_LE920			0x1200
 #define TELIT_PRODUCT_LE910			0x1201
 #define TELIT_PRODUCT_LE910_USBCFG4		0x1206
@@ -649,13 +653,19 @@ static const struct option_blacklist_info telit_me910_blacklist = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5be1a75b84e0 (usb: Update most of the USB stack to 3.18.120)
 static const struct option_blacklist_info telit_me910_dual_modem_blacklist = {
 	.sendsetup = BIT(0),
 	.reserved = BIT(3),
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> ee725ebbf25a (usb: Update most of the USB stack to 3.18.71)
+=======
+>>>>>>> 5be1a75b84e0 (usb: Update most of the USB stack to 3.18.120)
 static const struct option_blacklist_info telit_le910_blacklist = {
 	.sendsetup = BIT(0),
 	.reserved = BIT(1) | BIT(2),
@@ -1255,10 +1265,15 @@ static const struct usb_device_id option_ids[] = {
 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
 		.driver_info = (kernel_ulong_t)&telit_me910_blacklist },
 <<<<<<< HEAD
+<<<<<<< HEAD
 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
 		.driver_info = (kernel_ulong_t)&telit_me910_dual_modem_blacklist },
 =======
 >>>>>>> ee725ebbf25a (usb: Update most of the USB stack to 3.18.71)
+=======
+	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+		.driver_info = (kernel_ulong_t)&telit_me910_dual_modem_blacklist },
+>>>>>>> 5be1a75b84e0 (usb: Update most of the USB stack to 3.18.120)
 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE910),
 		.driver_info = (kernel_ulong_t)&telit_le910_blacklist },
 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_LE910_USBCFG4),
