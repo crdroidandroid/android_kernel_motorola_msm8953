@@ -10,6 +10,7 @@
 
 #include <linux/clk.h>
 #include <linux/delay.h>
+#include <linux/device.h>
 #include <linux/gpio.h>
 #include <linux/interrupt.h>
 #include <linux/kernel.h>
@@ -115,6 +116,7 @@ struct fpc1020_data {
 	struct platform_device *pdev;
 	struct wake_lock wlock;
 	struct notifier_block nb;
+	struct wakeup_source ttw_wakesrc;
 	int irq_gpio;
 	int rst_gpio;
 	int irq_num;
@@ -170,7 +172,7 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 {
 	struct fpc1020_data *fpc1020 = handle;
 
-	wake_lock_timeout(&fpc1020->wlock, msecs_to_jiffies(1000));
+	__pm_wakeup_event(&fpc1020->ttw_wakesrc, 1000);
 	dev_dbg(fpc1020->dev, "%s\n", __func__);
 	fpc1020->irq_cnt++;
 	sysfs_notify(&fpc1020->dev->kobj, NULL, dev_attr_irq.attr.name);
@@ -233,7 +235,7 @@ static int fpc1020_probe(struct platform_device *pdev)
 	usleep_range(200, 210);
 	gpio_direction_output(fpc1020->rst_gpio, 1);
 
-	wake_lock_init(&fpc1020->wlock, WAKE_LOCK_SUSPEND, "fpc1020");
+	wakeup_source_init(&fpc1020->ttw_wakesrc, "fpc_ttw_wl");
 
 	fpc1020->irq_cnt = 0;
 	irqf = IRQF_TRIGGER_RISING | IRQF_ONESHOT;
@@ -269,7 +271,7 @@ static int fpc1020_remove(struct platform_device *pdev)
 
 	sysfs_remove_group(&pdev->dev.kobj, &attribute_group);
 
-	wake_lock_destroy(&fpc1020->wlock);
+	wakeup_source_trash(&fpc1020->ttw_wakesrc);
 	dev_info(&pdev->dev, "%s\n", __func__);
 	return 0;
 }
